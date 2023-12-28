@@ -1,8 +1,8 @@
-# Three.js Journey
+# 1881 Tormach AR Application
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
-Run this followed commands:
+Run these commands:
 
 ``` bash
 # Install dependencies (only the first time)
