@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
+
 /**
  * Base
  */
@@ -61,6 +62,8 @@ gltfLoader.load(
     }
 )
 
+
+
 /**
  * Sizes
  */
@@ -89,13 +92,65 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(2, 2, 2)
+camera.position.set(-0.003,0.762,3)
+camera.rotation.set(0,0,0)
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.target.set(0, 0.75, 0)
 controls.enableDamping = true
+//controls.enabled=false
+
+let obj={
+    onButton: function(){
+        camera.position.set(1.796,0.593,0.604)
+        camera.rotation.set(0,1.6,0)
+        controls.update()
+
+    },
+    display: function(){
+        camera.position.set(0.523, 0.544, 1.805)
+        camera.rotation.set(0.033, -0.495, 0.016)
+        //controls.update()
+    },
+    centered: function(){
+        camera.position.set(-0.003,0.762,3)
+        camera.rotation.set(0,0,0)
+        controls.update()
+    },
+    spindle: function(){
+        camera.position.set(0.009,0.791,0.713)
+        camera.rotation.set(0,0,0)
+        controls.update()
+    },
+    bed: function(){
+        camera.position.set(-0.023,1.109,1.530)
+        camera.rotation.set(-0.549,0.042,0.025)
+        //controls.update()
+    },
+    manualControls: function(){
+        camera.position.set(0.512,0.723,1.707)
+        camera.rotation.set(0,0,0)
+        //controls.update()
+    }
+}
+
+//GUI
+gui.add(camera.position,'x').min(-5).max(5).step(0.1)
+gui.add(camera.position,'y').min(-5).max(5).step(0.1)
+gui.add(camera.position,'z').min(-5).max(5).step(0.1)
+gui.add(camera.rotation,'x').min(-5).max(5).step(0.1)
+gui.add(camera.rotation,'y').min(-5).max(5).step(0.1)
+gui.add(camera.rotation,'z').min(-5).max(5).step(0.1)
+gui.add(obj, 'onButton')
+gui.add(obj, 'display')
+gui.add(obj, 'centered')
+gui.add(obj, 'spindle')
+gui.add(obj, 'bed')
+gui.add(obj, 'manualControls')
+
+
 
 /**
  * Renderer
@@ -120,8 +175,11 @@ const tick = () =>
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
 
+    console.log(camera.position)
+    console.log(camera.rotation)
+
     // Update controls
-    controls.update()
+    //controls.update()
 
     // Render
     renderer.render(scene, camera)
